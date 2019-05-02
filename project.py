@@ -11,3 +11,4 @@ print(credit_data.head())
 ## Data Analysis
 
 print(credit_data.info())
+print(credit_data.describe())
