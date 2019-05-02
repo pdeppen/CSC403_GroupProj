@@ -8,3 +8,4 @@ def load_credit_data():
 credit_data = load_credit_data()
 print(credit_data.head())
 
+## Data Analysis
