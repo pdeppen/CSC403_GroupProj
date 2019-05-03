@@ -26,4 +26,6 @@ credit_data = credit_data.drop("own_telephone", axis=1)
 credit_data = credit_data.drop("foreign_worker", axis=1)
 credit_data = credit_data.drop("installment_commitment", axis=1)
 
-
+# split data into training and test sets
+x_train, x_test, y_train, y_test = credit_data[:500], credit_data[500:], credit_data[:500], credit_data[500:]
+print(x_train.info())
