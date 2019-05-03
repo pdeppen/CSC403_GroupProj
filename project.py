@@ -45,33 +45,39 @@ credit_data = load_credit_data()
 
 from sklearn.preprocessing import LabelEncoder
 labelencoder = LabelEncoder()
-# credit_data[:, 0] = labelencoder.fit_transform(credit_data[:, 0])
-# credit_data.apply(LabelEncoder().fit_transform)
+# print(credit_data["personal_status"])
 
 credit_data = credit_data.apply(LabelEncoder().fit_transform)
-# labelencoder.fit(credit_data["class"])
-# print(labelencoder.classes_)
-# credit_data["class"] = labelencoder.transform(credit_data["class"])
-# print(credit_data["class"])
+
 
 # print(credit_data)
 # print(credit_data["personal_status"])
 
-# labelencoder.fit
-
-
 corr_matrix = credit_data.corr()
-print(corr_matrix["class"].sort_values(ascending=False))
+# print(corr_matrix["class"].sort_values(ascending=False))
 
 
 attributes = ["duration", "age", "credit_amount"]
 scatter_matrix(credit_data[attributes], figsize=(12, 8))
-plt.show()
-
-from pandas.plotting import scatter_matrix
 
 attributes = ["class", "checking_status", "savings_status", "age"]
 
 # scatter_matrix(credit_data[attributes], figsize=(12,8))
+
 # plt.show()
->>>>>>> master
+
+# dropping features
+print(credit_data.info())
+credit_data = credit_data.drop("num_dependents", axis=1)
+credit_data = credit_data.drop("purpose", axis=1)
+credit_data = credit_data.drop("personal_status", axis=1)
+credit_data = credit_data.drop("other_parties", axis=1)
+credit_data = credit_data.drop("property_magnitude", axis=1)
+credit_data = credit_data.drop("other_payment_plans", axis=1)
+credit_data = credit_data.drop("existing_credits", axis=1)
+credit_data = credit_data.drop("job", axis=1)
+credit_data = credit_data.drop("own_telephone", axis=1)
+credit_data = credit_data.drop("foreign_worker", axis=1)
+credit_data = credit_data.drop("installment_commitment", axis=1)
+
+print(credit_data.info())
