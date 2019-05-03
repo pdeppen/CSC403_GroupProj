@@ -54,14 +54,24 @@ credit_data = credit_data.apply(LabelEncoder().fit_transform)
 # credit_data["class"] = labelencoder.transform(credit_data["class"])
 # print(credit_data["class"])
 
-print(credit_data)
+# print(credit_data)
 # print(credit_data["personal_status"])
 
 # labelencoder.fit
 
+
 corr_matrix = credit_data.corr()
 print(corr_matrix["class"].sort_values(ascending=False))
+
 
 attributes = ["duration", "age", "credit_amount"]
 scatter_matrix(credit_data[attributes], figsize=(12, 8))
 plt.show()
+
+from pandas.plotting import scatter_matrix
+
+attributes = ["class", "checking_status", "savings_status", "age"]
+
+# scatter_matrix(credit_data[attributes], figsize=(12,8))
+# plt.show()
+>>>>>>> master
