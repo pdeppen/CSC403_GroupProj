@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+from pandas.plotting import scatter_matrix
 
 def load_credit_data():
     csv_path = os.path.join("./datasets/dataset_31_credit-g.csv")
@@ -60,3 +61,7 @@ print(credit_data)
 
 corr_matrix = credit_data.corr()
 print(corr_matrix["class"].sort_values(ascending=False))
+
+attributes = ["duration", "age", "credit_amount"]
+scatter_matrix(credit_data[attributes], figsize=(12, 8))
+plt.show()
