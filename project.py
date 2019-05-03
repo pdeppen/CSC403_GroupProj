@@ -30,5 +30,33 @@ credit_data = load_credit_data()
 
 ## Data Analysis
 
-print(credit_data.info())
-print(credit_data.describe())
+# print(credit_data.info())
+# print(credit_data.describe())
+
+
+#ENCODER
+# credit_data_encoded, credit_data_categories = credit_data_cat.factorize()
+# print(credit_data_encoded[:10])
+
+# from sklearn.preprocessing import OneHotEncoder
+# encoder = OneHotEncoder()
+# credit_data_1hot = encoder.fit_transform()
+
+from sklearn.preprocessing import LabelEncoder
+labelencoder = LabelEncoder()
+# credit_data[:, 0] = labelencoder.fit_transform(credit_data[:, 0])
+# credit_data.apply(LabelEncoder().fit_transform)
+
+credit_data = credit_data.apply(LabelEncoder().fit_transform)
+# labelencoder.fit(credit_data["class"])
+# print(labelencoder.classes_)
+# credit_data["class"] = labelencoder.transform(credit_data["class"])
+# print(credit_data["class"])
+
+print(credit_data)
+# print(credit_data["personal_status"])
+
+# labelencoder.fit
+
+corr_matrix = credit_data.corr()
+print(corr_matrix["class"].sort_values(ascending=False))
