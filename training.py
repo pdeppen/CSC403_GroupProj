@@ -1,13 +1,17 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from pandas.plotting import scatter_matrix
+from sklearn.preprocessing import LabelEncoder
+
 
 def load_credit_data():
     csv_path = os.path.join("./datasets/dataset_31_credit-g.csv")
     return pd.read_csv(csv_path)
 
+# load data
 credit_data = load_credit_data()
+# apply label encoder
+credit_data = credit_data.apply(LabelEncoder().fit_transform)
 
 # dropping features
 credit_data = credit_data.drop("num_dependents", axis=1)
@@ -21,4 +25,5 @@ credit_data = credit_data.drop("job", axis=1)
 credit_data = credit_data.drop("own_telephone", axis=1)
 credit_data = credit_data.drop("foreign_worker", axis=1)
 credit_data = credit_data.drop("installment_commitment", axis=1)
+
 
