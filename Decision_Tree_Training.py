@@ -2,10 +2,13 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
-from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 import numpy as np
+from sklearn.metrics import precision_score, recall_score
+from sklearn.metrics import f1_score
+from sklearn.model_selection import cross_val_predict
+from sklearn.tree import DecisionTreeClassifier
 
 def load_credit_data():
     csv_path = os.path.join("./datasets/dataset_31_credit-g.csv")
@@ -53,41 +56,36 @@ x_train, y_train = x_train[shuffle_index], y_train[shuffle_index]
 y_train_yes = (y_train == 1)
 y_test_yes = (y_test == 1)
 
-
-# print(cross_val_score(sgd_clf, x_train, y_train_yes, cv=2, scoring="accuracy"))
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import cross_val_predict
-
-from sklearn.tree import DecisionTreeRegressor
-tree_reg = DecisionTreeRegressor(max_depth=2)
+tree_reg = DecisionTreeClassifier()
 tree_reg.fit(x_train, y_train_yes)
 
-# lin_reg = LinearRegression()
-# lin_reg.fit(x_train, y_train_yes)
-print(cross_val_score(tree_reg, x_train, y_train_yes, cv=2, scoring="accuracy"))
+print("Cross Validation Score: ", cross_val_score(tree_reg, x_train, y_train_yes, cv=3, scoring="accuracy"))
 
-# y_train_pred = cross_val_predict(lin_reg, x_train, y_train_yes, cv=3)
+y_train_pred = cross_val_predict(tree_reg, x_train, y_train_yes, cv=3)
 
-# # precision
-# from sklearn.metrics import precision_score, recall_score
-# print("Precision Score: ", precision_score(y_train_yes, y_train_pred))
-# print("Recall Score: ", recall_score(y_train_yes, y_train_pred))
-#
-# print("F1 Score: ", f1_score(y_train_yes, y_train_pred))
-#
-# from sklearn.metrics import precision_recall_curve
-# y_scores = cross_val_predict(, x_train, y_train_yes, cv=3, method="decision_function")
-#
-# precisions, recalls, thresholds = precision_recall_curve(y_train_yes, y_scores)
-#
-# def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
-#     plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
-#     plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
-#     plt.xlabel("Threshold")
-#     plt.legend(loc="center left")
-#     plt.ylim([0,1])
-#
-# # plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+# precision
+print("Precision Score: ", precision_score(y_train_yes, y_train_pred))
+print("Recall Score: ", recall_score(y_train_yes, y_train_pred))
+print("F1 Score: ", f1_score(y_train_yes, y_train_pred))
+
+from sklearn.metrics import precision_recall_curve
+
+
+y_scores = cross_val_predict(tree_reg, x_train, y_train_yes, cv=3, method="decision_function")
+
+
+precisions, recalls, thresholds = precision_recall_curve(y_train_yes, y_scores)
+
+
+def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+    plt.xlabel("Threshold")
+    plt.legend(loc="center left")
+    plt.ylim([0,1])
+
+
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
 #
 # def plot_precision_vs_recall(precisions, recalls):
 #     plt.plot(recalls, precisions, "b-", linewidth=2)
@@ -111,4 +109,4 @@ print(cross_val_score(tree_reg, x_train, y_train_yes, cv=2, scoring="accuracy"))
 #
 #
 # plot_roc_curve(fpr, tpr)
-# plt.show()
+plt.show()
