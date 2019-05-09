@@ -10,6 +10,19 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import cross_val_predict
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LinearRegression
+from sklearn.tree import export_graphviz
+
+PROJECT_ROOT_DIR = "."
+CHAPTER_ID = "Screenshots"
+
+def image_path(fig_id):
+    return os.path.join("/home/ob0795/Owen_Burnham_Junior/CSC403/CSC403_GroupProj", fig_id)
+
+def save_fig(fig_id, tight_layout=True):
+    print("Saving figure", fig_id)
+    if tight_layout:
+        plt.tight_layout()
+    plt.savefig(image_path(fig_id) + ".png", format='png', dpi=300)
 
 def load_credit_data():
     csv_path = os.path.join("./datasets/dataset_31_credit-g.csv")
@@ -60,6 +73,15 @@ y_test_yes = (y_test == 1)
 tree_reg = DecisionTreeClassifier(max_depth = 2)
 tree_reg.fit(x_train, y_train_yes)
 
+export_graphviz(
+        tree_reg,
+        out_file=image_path("GP_tree.dot"),
+        #feature_names=credit_data.feature_names[20:],
+        #class_names=credit_data.target_names,
+        rounded=True,
+        filled=True
+    )
+save_fig("GP_tree.dot")
 #lin_reg = LinearRegression()
 #lin_reg.fit(x_train, y_train_yes)
 
