@@ -1,7 +1,15 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 from pandas.plotting import scatter_matrix
+=======
+import tarfile
+from six.moves import urllib
+import pandas as pd
+from pandas.plotting import scatter_matrix
+from pandas import DataFrame
+>>>>>>> 5d8223c672e873fad2824559689e3d6e96c5d17b
 
 def load_credit_data():
     csv_path = os.path.join("./datasets/dataset_31_credit-g.csv")
@@ -31,6 +39,7 @@ credit_data = load_credit_data()
 
 ## Data Analysis
 
+<<<<<<< HEAD
 # print(credit_data.info())
 # print(credit_data.describe())
 
@@ -81,3 +90,11 @@ credit_data = credit_data.drop("foreign_worker", axis=1)
 credit_data = credit_data.drop("installment_commitment", axis=1)
 
 print(credit_data.info())
+=======
+#print(credit_data.info())
+#print(credit_data.describe())
+
+corr_matrix = credit_data.corr()
+print(corr_matrix)
+print(corr_matrix["class"])
+>>>>>>> 5d8223c672e873fad2824559689e3d6e96c5d17b
